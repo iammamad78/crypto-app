@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { searchCoin } from "../../services/cryptoApi";
 import { Roller } from "react-css-spinners";
+
+import { searchCoin } from "../../services/cryptoApi";
+import styles from "./Search.module.css";
 
 function Search({ currency, setCurrency }) {
   const [text, setText] = useState("");
@@ -43,7 +45,7 @@ function Search({ currency, setCurrency }) {
   }, [text]);
 
   return (
-    <div>
+    <div className={styles.searchBox}>
       <input
         type="text"
         placeholder="Search..."
@@ -55,17 +57,19 @@ function Search({ currency, setCurrency }) {
         <option value="eur">EUR</option>
         <option value="jpy">JPY</option>
       </select>
-      <div>
-        {isLoading && <Roller color="#3874ff" size="40" />}
-        <ul>
-          {coins.map((coin) => (
-            <li key={coin.id}>
-              <img src={coin.thumb} alt={coin.name} />
-              <p>{coin.name}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {(!!coins.length || isLoading) && (
+        <div className={styles.searchResult}>
+          {isLoading && <Roller color="#3874ff" size="40" />}
+          <ul>
+            {coins.map((coin) => (
+              <li key={coin.id}>
+                <img src={coin.thumb} alt={coin.name} />
+                <p>{coin.name}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
