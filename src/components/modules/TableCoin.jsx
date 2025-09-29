@@ -2,12 +2,13 @@ import chartUp from "../../assets/chart-up.svg";
 import chartDown from "../../assets/chart-down.svg";
 
 import styles from "./TableCoin.module.css";
+import { Roller } from "react-css-spinners";
 
 function TableCoin({ coins, isLoading, currency }) {
   return (
     <div className={styles.container}>
       {isLoading ? (
-        <p>Loading...</p>
+        <Roller color="#3874ff" size="80" />
       ) : (
         <table className={styles.table}>
           <thead>

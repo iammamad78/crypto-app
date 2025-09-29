@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { searchCoin } from "../../services/cryptoApi";
+import { Roller } from "react-css-spinners";
 
 function Search({ currency, setCurrency }) {
   const [text, setText] = useState("");
@@ -55,7 +56,7 @@ function Search({ currency, setCurrency }) {
         <option value="jpy">JPY</option>
       </select>
       <div>
-        {isLoading && <p>Loading...</p>}
+        {isLoading && <Roller color="#3874ff" size="40" />}
         <ul>
           {coins.map((coin) => (
             <li key={coin.id}>
