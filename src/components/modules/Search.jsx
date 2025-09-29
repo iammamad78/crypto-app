@@ -4,12 +4,16 @@ import { searchCoin } from "../../services/cryptoApi";
 function Search({ currency, setCurrency }) {
   const [text, setText] = useState("");
   const [coins, setCoins] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
 
     setCoins([]);
-    if (!text) return;
+    if (!text) {
+      setIsLoading(false);
+      return;
+    }
 
     const search = async () => {
       try {
@@ -21,6 +25,7 @@ function Search({ currency, setCurrency }) {
 
         if (json.coins) {
           setCoins(json.coins);
+          setIsLoading(false);
         } else {
           alert(json.status.error_message || "No coins found");
         }
@@ -30,6 +35,8 @@ function Search({ currency, setCurrency }) {
         }
       }
     };
+
+    setIsLoading(true);
     search();
     return () => controller.abort();
   }, [text]);
@@ -48,6 +55,7 @@ function Search({ currency, setCurrency }) {
         <option value="jpy">JPY</option>
       </select>
       <div>
+        {isLoading && <p>Loading...</p>}
         <ul>
           {coins.map((coin) => (
             <li key={coin.id}>
