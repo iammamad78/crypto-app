@@ -4,7 +4,7 @@ import chartDown from "../../assets/chart-down.svg";
 import styles from "./TableCoin.module.css";
 import { Roller } from "react-css-spinners";
 
-function TableCoin({ coins, isLoading, currency }) {
+function TableCoin({ coins, isLoading, currency, setChart }) {
   return (
     <div className={styles.container}>
       {isLoading ? (
@@ -24,7 +24,12 @@ function TableCoin({ coins, isLoading, currency }) {
 
           <tbody>
             {coins.map((coin) => (
-              <TableRow coin={coin} key={coin.id} currency={currency} />
+              <TableRow
+                coin={coin}
+                key={coin.id}
+                currency={currency}
+                setChart={setChart}
+              />
             ))}
           </tbody>
         </table>
@@ -45,11 +50,12 @@ const TableRow = ({
     price_change_percentage_24h: price_change,
   },
   currency,
+  setChart,
 }) => {
   return (
     <tr>
       <td>
-        <div className={styles.symbol}>
+        <div className={styles.symbol} onClick={() => setChart(true)}>
           <img src={image} />
           <span>{symbol.toUpperCase()}</span>
         </div>
