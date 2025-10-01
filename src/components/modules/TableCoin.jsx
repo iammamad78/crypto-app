@@ -3,6 +3,7 @@ import chartDown from "../../assets/chart-down.svg";
 
 import styles from "./TableCoin.module.css";
 import { Roller } from "react-css-spinners";
+import { marketChart } from "../../services/cryptoApi";
 
 function TableCoin({ coins, isLoading, currency, setChart }) {
   return (
@@ -42,6 +43,7 @@ export default TableCoin;
 
 const TableRow = ({
   coin: {
+    id,
     image,
     symbol,
     name,
@@ -52,10 +54,21 @@ const TableRow = ({
   currency,
   setChart,
 }) => {
+  const showHandler = async () => {
+    try {
+      const res = await fetch(marketChart(id));
+      const json = await res.json();
+      console.log(json);
+      setChart(json);
+    } catch (error) {
+      console.log(error);
+      setChart(null);
+    }
+  };
   return (
     <tr>
       <td>
-        <div className={styles.symbol} onClick={() => setChart(true)}>
+        <div className={styles.symbol} onClick={showHandler}>
           <img src={image} />
           <span>{symbol.toUpperCase()}</span>
         </div>
