@@ -13,27 +13,47 @@ import styles from "./Chart.module.css";
 
 function Chart({ chart, setChart }) {
   const [type, setType] = useState("prices");
-  console.log(chart);
+
+  const typeHandler = (e) => {
+    if (e.target.tagName === "BUTTON") {
+      const type = e.target.innerText.toLowerCase().replace(" ", "_");
+      setType(type);
+    }
+  };
 
   return (
     <div className={styles.container}>
-      <span className={styles.cross} onClick={() => setChart(null)}>
-        X
-      </span>
-
+      {/* Chart Modal */}
       <div className={styles.chart}>
-        <div className={styles.name}>
-          <img src={chart.coin.image} />
-          <p>{chart.coin.name}</p>
+        {/* modal header */}
+        <div className={styles.header}>
+          <div className={styles.name}>
+            <img src={chart.coin.image} />
+            <p>{chart.coin.name}</p>
+          </div>
+
+          {/* Close Btn */}
+          <div className={styles.cross} onClick={() => setChart(null)}>
+            X
+          </div>
         </div>
+        {/* modal graph */}
         <div className={styles.graph}>
           <ChartComponent data={convertData(chart, type)} type={type} />
         </div>
-        <div className={styles.types}>
-          <button>Prices</button>
-          <button>Market Caps</button>
-          <button>Total Volume</button>
+        {/* modal Btns */}
+        <div className={styles.types} onClick={typeHandler}>
+          <button className={type === "prices" ? styles.selected : null}>
+            Prices
+          </button>
+          <button className={type === "market_caps" ? styles.selected : null}>
+            Market Caps
+          </button>
+          <button className={type === "total_volumes" ? styles.selected : null}>
+            Total Volumes
+          </button>
         </div>
+        {/* modal details */}
         <div className={styles.details}>
           <div>
             <p>Prices: </p>
