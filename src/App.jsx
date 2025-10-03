@@ -1,10 +1,11 @@
 import HomePage from "./components/templates/HomePage";
+import Layouts from "./Layouts/Layouts";
 
 function App() {
   return (
-    <>
+    <Layouts>
       <HomePage />
-    </>
+    </Layouts>
   );
 }
 
